@@ -27,6 +27,7 @@
 #include <boost/function.hpp>
 
 #include "pandarGeneral/point_types.h"
+#include "pandarGeneral/pandarGeneral_internal.h"
 
 class PandarGeneral_Internal;
 
@@ -42,9 +43,10 @@ class PandarGeneral {
    *        start_angle       The start angle of every point cloud ,
    *                          should be <real angle> * 100.
    */
-  PandarGeneral(std::string device_ip, uint16_t lidar_port, uint16_t gps_port,
+  PandarGeneral(std::string device_ip, uint16_t lidar_port, uint16_t lidar_algorithm_port, uint16_t gps_port,
             boost::function<void(boost::shared_ptr<PPointCloud>, double)>
                 pcl_callback,
+            boost::function<void(HS_Object3D_Object_List*)> algorithm_callback,
             boost::function<void(double)> gps_callback, uint16_t start_angle,
             int tz, int pcl_type, std::string frame_id, std::string timestampType); // the default timestamp type is LiDAR time
 
@@ -87,6 +89,17 @@ class PandarGeneral {
    * @brief Stop SDK.
    */
   void Stop();
+
+  /** @brief get major version.
+  * @Return   ： major version
+   */
+  int getMajorVersion();
+
+  /**
+  * @brief get minor version.
+  * @Return   ： minor version
+  */
+  int getMinorVersion();
 
  private:
   PandarGeneral_Internal *internal_;

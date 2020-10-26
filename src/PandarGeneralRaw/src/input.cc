@@ -27,7 +27,7 @@
 #include <time.h>
 #include "../util.h"
 
-#include "src/input.h"
+#include "input.h"
 #include "log.h"
 
 Input::Input(uint16_t port, uint16_t gpsPort) {
@@ -60,6 +60,12 @@ Input::Input(uint16_t port, uint16_t gpsPort) {
     socketNumber = 1;
     return;
   }
+
+   if (0 == gpsPort) {
+    socketNumber = 1;
+    return;
+  }
+
   // gps socket
   socketForGPS = -1;
   socketForGPS = socket(PF_INET, SOCK_DGRAM, 0);

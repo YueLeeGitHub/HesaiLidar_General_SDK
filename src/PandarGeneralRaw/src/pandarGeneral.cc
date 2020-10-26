@@ -14,8 +14,8 @@
  * limitations under the License.
  *****************************************************************************/
 
-#include "pandarGeneral/pandarGeneral.h"
-#include "src/pandarGeneral_internal.h"
+#include "pandarGeneral.h"
+#include "pandarGeneral_internal.h"
 #include "log.h"
 /**
  * @brief Constructor
@@ -27,13 +27,14 @@
  *        start_angle       The start angle of every point cloud
  */
 PandarGeneral::PandarGeneral(
-    std::string device_ip, uint16_t lidar_port, uint16_t gps_port,
+    std::string device_ip, uint16_t lidar_port, uint16_t lidar_algorithm_port, uint16_t gps_port,
     boost::function<void(boost::shared_ptr<PPointCloud>, double)> pcl_callback,
+    boost::function<void(HS_Object3D_Object_List*)> algorithm_callback,
     boost::function<void(double)> gps_callback, uint16_t start_angle, int tz,
     int pcl_type, std::string frame_id, std::string timestampType) {
       // LOG_FUNC();
   internal_ =
-      new PandarGeneral_Internal(device_ip, lidar_port, gps_port, pcl_callback,
+      new PandarGeneral_Internal(device_ip, lidar_port, lidar_algorithm_port, gps_port, pcl_callback, algorithm_callback,
                              gps_callback, start_angle, tz, pcl_type, frame_id, timestampType);
 }
 
@@ -83,3 +84,15 @@ int PandarGeneral::Start() { return internal_->Start(); }
  * @brief Stop SDK.
  */
 void PandarGeneral::Stop() { internal_->Stop(); }
+
+int PandarGeneral::getMajorVersion() {
+  if (internal_) {
+    internal_->getMajorVersion();
+  }
+}
+
+int PandarGeneral::getMinorVersion() {
+  if (internal_) {
+    internal_->getMinorVersion();
+  }
+}
