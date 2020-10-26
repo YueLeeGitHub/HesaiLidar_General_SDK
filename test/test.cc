@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
   //     lidarCallback, gpsCallback, 0, 0, 1, std::string("Pandar40P"));
 
   PandarGeneralSDK pandarGeneral(std::string("/path/to/pcapFile"), \
-  lidarCallback, 0, 0, 1, std::string("PandarXT-16"));
+  lidarCallback, 0, 0, 1, std::string("PandarXT-16"), "");
   std::string filePath = "/path/to/correctionFile";
   std::ifstream fin(filePath);
   int length = 0;
